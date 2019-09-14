@@ -1,0 +1,148 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Announcements</title>
+  <!-- favicon -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/ViTG5vkhP7yxqyB-uu_SOWUfastbuG6AR0rtHb34-49AKuk4zPRzKC0tYuEjeg6RbUeQBrkI7W0ASOg=w1301-h647" type="image/png" sizes="16x16">
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <style>
+    *:focus {
+    outline: 0;
+    outline: none;
+    }
+  </style>
+</head>
+
+<body>
+	
+<!--	<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">Your life is decided by the contents of this page.</p>
+  </div>
+</div>
+-->	
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark " style="margin-bottom: 5%" id="navbar">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/logo.png' %}" alt="Fractal" style="width:40px;"> Fractal
+  </a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="collapse navbar-collapse" id="collapsibleNavbar">
+  <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+    <li><p class="top-menu" style="color:white">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Login<i class="fa fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'signup' %}">Register<i class="fa fa-user-plus"></i>
+</a>
+    </li>
+    {% endif %}
+</ul>
+</div>
+</nav>
+
+<!--
+<div class="container">
+	<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Announcement</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>All members are requested to arrive at 4:30pm in NLT204.</td>
+      <td>29/8/2018</td>
+    </tr>
+  </tbody>
+</table>
+</div>-->
+
+<div class="container">
+  <h1>Announcements</h1>
+  <hr/>
+  <br>
+</div>
+
+<div class="container">
+<div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          Announcement for competition on Hackerearth
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+        	<center>
+          <a href = "https://www.hackerearth.com/challenge/college/fractal18a-1/">Fractal18.A</a> is the online coding competition organized for first-year students of IET LUCKNOW.<br> Contest would be live from 29 October 2018, 09:00PM to 30 October 2018, 02:00 AM.<br> It is compulsory for every Fractal Student.
+      </center>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <br>
+
+<!--Paginator-->
+<div class="container">
+  <div class="text-center">
+  {% if resources.has_other_pages %}
+    <ul class="pagination">
+      {% if resources.has_previous %}
+        <li><a href="?page={{ resources.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in resources.paginator.page_range %}
+        {% if resources.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if resources.has_next %}
+        <li><a href="?page={{ resources.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</div>
+</div>
+
+
+
+</body>
+</html>

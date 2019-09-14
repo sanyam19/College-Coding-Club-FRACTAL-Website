@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+	<html>
+	<head>
+		<meta name ="viewport" content="width=device-width", initial-scale="1">
+        <title>Explore</title>
+  <!-- favicon -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/ViTG5vkhP7yxqyB-uu_SOWUfastbuG6AR0rtHb34-49AKuk4zPRzKC0tYuEjeg6RbUeQBrkI7W0ASOg=w1301-h647" type="image/png" sizes="16x16">
+
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+          *:focus {
+          outline: 0;
+          outline: none;
+          }
+        </style>
+	</head>
+	<body>
+		<!--navbar-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a href="{% url  'home' %}" class="navbar-brand"><span class="glyphicon glyphicon-picture"></span> Fractal</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+       <ul class="nav navbar-nav">
+         <li><a href="#">Category</a></li>
+         <li><a href="#">Resources</a></li>
+        </ul>
+
+      
+    </div>
+    </nav>
+     
+
+      <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'filter' %}">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search" name="quote">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+    </form>
+    <br/><br/>
+     <table class="table table-striped">
+        
+     {% for quest in questions %}
+        <tr>
+          <th scope="row">{{ quest.id }}</th>
+          <td>{{ quest.title }}</td>
+          <td>{{ quest.display_tags }}</td>
+          <td>{{ quest.display_category}}</td>
+        </tr>
+     {% endfor %}
+        </tbody>
+     </table>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</body>
+	</html>	

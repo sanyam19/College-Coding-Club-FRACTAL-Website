@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Questions</title>
+  <!-- favicon -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/ViTG5vkhP7yxqyB-uu_SOWUfastbuG6AR0rtHb34-49AKuk4zPRzKC0tYuEjeg6RbUeQBrkI7W0ASOg=w1301-h647" type="image/png" sizes="16x16">
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <style>
+    *:focus {
+    outline: 0;
+    outline: none;
+    }
+  </style>
+</head>
+
+<body>
+	
+<!--	<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">Your life is decided by the contents of this page.</p>
+  </div>
+</div>
+-->	
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark " style="margin-bottom: 5%" id="navbar">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/logo.png' %}" alt="Fractal" style="width:40px;"> Fractal
+  </a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'classroom:question' %}">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:slide' %}">Slide</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:archive' %}">Archive</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:schedule' %}">Schedule</a>
+    </li>
+  </ul>
+
+
+<!-- Items to the right in navbar-->
+
+ <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+    <li><p class="top-menu" style="color:white">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Login<i class="fa fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'signup' %}">Register<i class="fa fa-user-plus"></i>
+</a>
+    </li>
+    {% endif %}
+</ul>
+</div>
+</nav>
+
+<div class="container">
+  <h1>{{ session }}</h1>
+  <hr/>
+  <br>
+</div>
+
+
+<div class="container">
+  <!--table-->
+	<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Questions</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for quest in questionns %}
+          <tr>
+            <th scope="row">{{ forloop.counter0|add:questionns.start_index }}</th>
+        
+
+            <td><a href="{{quest.url}}" target="_Blank">{{quest.heading}}</a></td>
+            <td>{{ quest.question_date}}</td>
+          </tr>
+       {% endfor %}
+  </tbody>
+</table>
+
+
+<!--Paginator-->
+<div class="container">
+    <div class="text-center">
+  {% if questionns.has_other_pages %}
+      <ul class="pagination">
+        {% if questionns.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ questionns.previous_page_number }} tabindex="-1"">Previous</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+        {% for i in questionns.paginator.page_range %}
+          {% if questionns.number == i %}
+            <li class="page-item active "><span class="page-link">{{ i }} <span class="sr-only page-link">(current)</span></span></li>
+          {% else %}
+            <li class=" page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if questionns.has_next %}
+          <li class="page-item" ><a class="page-link" href="?page={{ questionns.next_page_number }}" tabindex="-1">Next</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Questions</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	
+<!--	<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">Your life's schedule is decided by the contents of this page.</p>
+  </div>
+</div>
+-->	
+
+  <nav class="navbar navbar-expand-sm bg-light navbar-light " style="margin-bottom: 10px">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="#" alt="Fractal" style="width:40px;">
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'questions' %}">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'resources' %}">Resources</a>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+         <li><p class="top-menu">Hello {{ user.username }}(<a href="{% url 'logout' %}">Log out</a>)</p>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'signup' %}">Register</a>
+    </li>
+    {% endif %}
+  </ul>
+  </nav>
+
+
+</nav>
+      <br/><br/>
+      <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'filter' %}">
+      {% csrf_token %}
+      
+      <input class="form-control mr-sm-2" type="search" placeholder="Tag" aria-label="Search" name="quote">
+      <input class="form-control mr-sm-2" type="search" placeholder="Difficulty" aria-label="Search" name="quote1">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+    </form>
+    <br/><br/>
+
+  <!--table-->
+	<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Tags</th>
+      <th scope="col">Difficulty</th>
+    </tr>
+  </thead>
+    <tbody>
+       {% for quest in questions %}
+          <tr>
+            <th scope="row">{{ forloop.counter0|add:questions.start_index }}</th>
+            <td>{{ quest.title }}</td>
+            <td>{{ quest.display_tags }}</td>
+            <td>{{ quest.category}}</td>
+          </tr>
+       {% endfor %}
+       </tbody>
+  </table>
+
+  {% if questions.has_other_pages %}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        {% if questions.has_previous %}
+          <li><a href="?page={{ questions.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in questions.paginator.page_range %}
+          {% if questions.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if questions.has_next %}
+          <li><a href="?page={{ questions.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>  
+  {% endif %}
+
+</body>
+</html>

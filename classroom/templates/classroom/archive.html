@@ -1,0 +1,129 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Archive</title>
+  <!-- favicon -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/ViTG5vkhP7yxqyB-uu_SOWUfastbuG6AR0rtHb34-49AKuk4zPRzKC0tYuEjeg6RbUeQBrkI7W0ASOg=w1301-h647" type="image/png" sizes="16x16">
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <style>
+    *:focus {
+    outline: 0;
+    outline: none;
+    }
+  </style>
+</head>
+
+<body>
+	
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark " style="margin-bottom: 5%" id="navbar">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/logo.png' %}" alt="Fractal" style="width:40px;"> Fractal
+  </a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:question' %}">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:slide' %}">Slide</a>
+    </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'classroom:archive' %}">Archive</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'classroom:schedule' %}">Schedule</a>
+    </li>
+    {% if request.user.is_superuser %}
+     <li class="nav-item">
+      <!--a class="nav-link" href="{% url 'classroom:slide' %}">Admin User</a-->
+    </li>
+    {% endif %}
+  </ul>
+<!--  
+  
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="questions.html">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="slide.html">Slide</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="archive.html">Archive</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="schedule.html">Schedule</a>
+    </li>
+  </ul>
+-->
+
+<!-- Items to the right in navbar-->
+
+ <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+    <li><p class="top-menu" style="color:white">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Login<i class="fa fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'signup' %}">Register<i class="fa fa-user-plus"></i>
+</a>
+    </li>
+    {% endif %}
+</ul>
+</div>
+</nav>
+
+<div class="container">
+
+  <h1>Collection of previous sessions at Fractal</h1>
+    <hr/>
+  <br>
+</div>
+
+<form method="POST" action="{% url 'classroom:archive' %}">
+      {% csrf_token %}
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <div class='topbox-inner-right-small l-float'>
+    <center><select size="1" class="form-control" id="exampleFormControlSelect1" name='quote' style="width:30%;text-align:center;overflow-y: auto;overflow-x: hidden;">
+     {% for a in archive %}
+          <tr>
+           <option>{{ a.session }}</option>
+            
+          </tr>
+          {% endfor %}
+    </select></center></div>
+  </div>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">submit</button>
+  
+</form>
+  
+</div>
+</body>
+</html>

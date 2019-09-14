@@ -1,0 +1,121 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>About Us</title>
+  <!-- favicon -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/ViTG5vkhP7yxqyB-uu_SOWUfastbuG6AR0rtHb34-49AKuk4zPRzKC0tYuEjeg6RbUeQBrkI7W0ASOg=w1301-h647" type="image/png" sizes="16x16">
+
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" async></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" async></script>
+  <style>
+    *:focus {
+    outline: 0;
+    outline: none;
+    }
+  </style>
+</head>
+
+<body>
+	
+<!--	<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">Your life is decided by the contents of this page.</p>
+  </div>
+</div>
+-->	
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark " id="navbar">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/logo.png' %}" alt="Fractal" style="width:40px;"> Fractal
+  </a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="collapse navbar-collapse" id="collapsibleNavbar">
+   <ul class="navbar-nav ml-auto">
+    {% if user.is_authenticated %}
+    <li><p class="top-menu" style="color:white">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Login<i class="fa fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'signup' %}">Register<i class="fa fa-user-plus"></i>
+</a>
+    </li>
+    {% endif %}
+</ul>
+</div>
+</nav>
+
+
+<div class="container-fluid" style="background-color: #F0F7F7!important; padding-top: 2%;">
+<div class="container" >
+  <h1> WHO WE ARE ?</h1>
+  <img class="img-fluid float-left rounded" src="{% static 'images/logo_nb1.png' %}" height="30%" width="60%" style="padding-right: 20px; border-radius: 0.7em;">  
+  <p style="text-align: left!important; padding-left : 10%;">
+ <strong style="font-size: 30px;">F</strong><strong>RACTAL</strong>  is an active student-community of programming enthusiasts and coders based at the <b>Institute of Engineering & Technology, Lucknow</b>. Our activities are central to Competitive Coding and extend to development as well as research domains. Our core competencies include mathematical and algorithmic problem-solving with an emphasis on understanding data structures and algorithms.
+<br>
+Our principald motivation is derived from the idea that it is essential for an engineering student to have a complete knowledge of fundamental programming techniques. Fractal is inclusive for students from <b>all engineering streams</b> and we encourage students from all branches to join us and code.</p>
+<!-- <hr> -->
+</div>
+<br>
+</div>
+
+
+
+<div class="container-fluid" style="background-color: #dfeeee!important;">
+<div class="container" >
+  <h1> WHAT WE DO </h1>
+   <img class="img-fluid float-right rounded" src="{% static 'images/study2.jpg' %}" height="20%" width="34%" style="border-radius: 0.7em;">
+  <p style="text-align: left!important;">
+ <strong style="font-size: 30px;">T</strong><strong>HE</strong> key activity that our club performs is to introduce the freshman students to competitive coding and to expose them to holy-grail competitions like ACM-ICPC and Google Code-JAM. A highly competent and strong team of mentors from the sophomore year guides the freshmen students by conducting regular classes to teach programming and mathematics. Discussion sessions are held on a regular basis to help students with solving problems on online platforms and extending the scope to advanced topics. The central objective of these classes and discussions is to build an aptitude for mathematical thinking and algorithmic problem-solving. 
+</p>
+
+</div>
+<br>
+</div>
+
+
+<div class="container-fluid" style="background-color: #F0F7F7!important;">
+<div class="container" >
+  <h1> WHY JOIN ?</h1>
+  <img class="img-fluid float-left rounded" src="{% static 'images/fun.gif' %}" height="40%" width="35%" style="padding-right: 20px; border-radius: 0.7em;">
+  <p style="text-align: left!important;">
+ <strong style="font-size: 30px;">A</strong><strong>S</strong> a part of club activities, we host regular coding competitions, hackathons, seminars and open discussions. We have had the experience of successfully organizing various coding challenges in association with global coding platforms like Hackerearth, Hackerrank and Codechef. Codearena 2018 organized by our team in association with Hackerearth recorded a total outreach of 1267 competitive coders from over 12 countries worldwide. We regularly host pen-paper based programming quizzes and algorithmic challenges with the intent of preparing students for whiteboard interviews at companies like Microsoft and Facebook. We also focus on developing our students who would pursue technical and research internships in prestigious institutes and organizations. Many of our club members have had exceptional internship experiences in their fields of specialization including advanced topics like machine learning, cyber security, blockchain and scientific computation.</p>
+</div>
+<br>
+</div>
+
+
+<div class="container-fluid" style="background-color: #dfeeee!important;">
+<div class="container" >
+  <h1> OUR TEAM</h1>
+ <img src="{% static 'images/team.jpg' %}"  alt="Team Photo" width="100%" style="border-radius: 0.7em;" >
+
+</div>
+<br>
+</div>
+
+
+</body>
+</html>
